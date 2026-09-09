@@ -1,1 +1,1 @@
-# TCS504-assignment-1
+# Movie Ticketing System Design

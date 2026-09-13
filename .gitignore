@@ -1,0 +1,23 @@
+# Build artifacts
+MovieBooking
+*.o
+*.obj
+*.out
+build/
+build-*/
+
+# CMake-generated files
+CMakeFiles/
+CMakeCache.txt
+cmake_install.cmake
+Makefile
+
+# IDE and editor files
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# OS metadata
+.DS_Store
+Thumbs.db

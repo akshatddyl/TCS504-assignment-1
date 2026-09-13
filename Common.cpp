@@ -98,8 +98,7 @@ bool tryParseInt(const std::string& text, int& value)
 {
     std::istringstream stream(text);
     stream >> value;
-    if (stream.fail())
-    {
+    if (stream.fail()){
         return false;
     }
     std::string remainder;
@@ -107,12 +106,10 @@ bool tryParseInt(const std::string& text, int& value)
     return remainder.empty();
 }
 
-bool tryParseDouble(const std::string& text, double& value)
-{
+bool tryParseDouble(const std::string& text, double& value){
     std::istringstream stream(text);
     stream >> value;
-    if (stream.fail())
-    {
+    if (stream.fail()){
         return false;
     }
     //rejects trailing non-whitespace characters
@@ -140,4 +137,33 @@ bool isBlank(const std::string& text)
         }
     }
     return true;
+}
+
+namespace TerminalColor {
+    const std::string RESET = "\033[0m";
+    const std::string BOLD = "\033[1m";
+    const std::string RED = "\033[31m";
+    const std::string GREEN = "\033[32m";
+    const std::string YELLOW = "\033[33m";
+    const std::string BLUE = "\033[34m";
+    const std::string CYAN = "\033[36m";
+    
+    const std::string BOLD_RED = "\033[1;31m";
+    const std::string BOLD_GREEN = "\033[1;32m";
+    const std::string BOLD_YELLOW = "\033[1;33m";
+    const std::string BOLD_CYAN = "\033[1;36m";
+}
+
+inline std::string colorText(const std::string& text, const std::string& color) {
+    return color + text + TerminalColor::RESET;
+}
+
+inline std::string padRight(const std::string& text, std::size_t width) {
+    if (text.length() >= width) return text;
+    return text + std::string(width - text.length(), ' ');
+}
+
+// Pads the text FIRST, then applies color. This prevents std::setw alignment bugs!
+inline std::string colorPadded(const std::string& text, std::size_t width, const std::string& color) {
+    return color + padRight(text, width) + TerminalColor::RESET;
 }

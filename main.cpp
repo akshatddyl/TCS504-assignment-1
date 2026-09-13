@@ -58,9 +58,9 @@ struct MovieData{
 
 static std::vector<std::unique_ptr<Movie>> createMovies(){
     std::vector<MovieData> data = {
-        {"Inception",    "English", 148},
-        {"Interstellar", "English", 169},
-        {"RRR",          "Telugu",  187}
+        {"Golmaal 1",    "English", 148},
+        {"Golmaal 2", "Hindi", 169},
+        {"GOlmaal 3", "Urdu",  187}
     };
     std::vector<std::unique_ptr<Movie>> movies;
     for (const auto& entry : data){

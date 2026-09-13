@@ -9,8 +9,8 @@ class CinemaMenu{
 private:
     BookingService& bookingService;
     void displayMenu() const{
-        std::cout << "\n===== MOVIE TICKET BOOKING =====\n";
-        std::cout << CINEMA_NAME << "\n";
+        std::cout << colorText("\n===== MOVIE TICKET BOOKING =====\n", TerminalColor::BOLD_CYAN);
+        std::cout << colorText(std::string(CINEMA_NAME), TerminalColor::BOLD) << "\n";
         std::cout << MENU_LIST_MOVIES     << ". List Movies\n";
         std::cout << MENU_LIST_SHOWS      << ". List Shows for a Movie\n";
         std::cout << MENU_VIEW_SEAT_LAYOUT << ". View Seat Layout\n";
@@ -20,25 +20,24 @@ private:
     }
 
     void printInvalidNumber() const{
-        std::cout << "Please enter a valid number.\n";
+        std::cout << colorText("Please enter a valid number.\n", TerminalColor::RED);
     }
 
     void printOutOfRange(int minValue, int maxValue) const{
-        std::cout << "Please enter a value between "
-                  << minValue << " and " << maxValue << ".\n";
+        std::cout << colorText("Please enter a value between " +
+                  std::to_string(minValue) + " and " + std::to_string(maxValue) + ".\n", TerminalColor::YELLOW);
     }
 
     void printBlankInput() const{
-        std::cout << "Input cannot be blank. Please try again.\n";
+        std::cout << colorText("Input cannot be blank. Please try again.\n", TerminalColor::RED);
     }
 
     void printNoSeatsEntered() const{
-        std::cout << "No seats entered. Booking aborted.\n";
+        std::cout << colorText("No seats entered. Booking aborted.\n", TerminalColor::YELLOW);
     }
 
     void printFarewell() const{
-        std::cout << "\nThank you for visiting " << CINEMA_NAME
-                  << ". Goodbye!\n";
+        std::cout << colorText("\nThank you for visiting " + std::string(CINEMA_NAME) + ". Goodbye!\n", TerminalColor::GREEN);
     }
     std::string readLine(const std::string& prompt) const{
         std::cout << prompt;
@@ -90,7 +89,7 @@ private:
             if (value >= ZERO_AMOUNT){
                 return value;
             }
-            std::cout << "Value cannot be negative. Please try again.\n";
+            std::cout << colorText("Value cannot be negative. Please try again.\n", TerminalColor::RED);
         }
     }
 
@@ -135,7 +134,7 @@ private:
     }
 
     int readPaymentChoice() const{
-        std::cout << "\n--- Payment Method ---\n";
+        std::cout << colorText("\n--- Payment Method ---\n", TerminalColor::BOLD_CYAN);
         std::cout << PAYMENT_CHOICE_UPI  << ". UPI\n";
         std::cout << PAYMENT_CHOICE_CARD << ". Card\n";
         std::cout << PAYMENT_CHOICE_CASH << ". Cash\n";

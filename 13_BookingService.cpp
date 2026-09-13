@@ -6,8 +6,10 @@
 //
 // Association: Customer interacts with BookingService through the booking request (BookingService::Request).
 
-
-#include <bits/stdc++.h>
+#include <iostream>
+#include <vector>
+#include <string>
+#include <memory>
 
 class BookingService{
 public:
@@ -126,61 +128,60 @@ private:
         bookings.push_back(std::move(booking));
     }
     void printNoMovies() const{
-        std::cout << "No movies are currently playing.\n";
+        std::cout << colorText("No movies are currently playing.\n", TerminalColor::YELLOW);
     }
     void printNoShowsForMovie(const std::string& movieTitle) const{
-        std::cout << "No shows found for \"" << movieTitle << "\".\n";
+        std::cout << colorText("No shows found for \"" + movieTitle + "\".\n", TerminalColor::YELLOW);
     }
     void printMovieLine(int displayIndex, const Movie& movie) const{
         std::cout << displayIndex << ". "
-                  << movie.getTitle()
+                  << colorText(movie.getTitle(), TerminalColor::BOLD)
                   << " (" << movie.getLanguage()
                   << ", " << movie.getDurationMinutes() << " min)\n";
     }
 
     void printShowLine(const Show& show) const{
-        std::cout << "  Show ID: " << show.getShowId()
+        std::cout << "  Show ID: " << colorText(std::to_string(show.getShowId()), TerminalColor::CYAN)
                   << " | Screen: " << show.getScreen()->getScreenNumber()
                   << " | Time: " << show.getStartTime() << "\n";
     }
     void printShowNotFound(int showId) const{
-        std::cout << "Show with ID " << showId << " not found.\n";
+        std::cout << colorText("Show with ID " + std::to_string(showId) + " not found.\n", TerminalColor::RED);
     }
 
     void printSeatNotFound(const std::string& seatNumber) const{
-        std::cout << "Seat \"" << seatNumber << "\" does not exist in this show.\n";
+        std::cout << colorText("Seat \"" + seatNumber + "\" does not exist in this show.\n", TerminalColor::RED);
     }
 
     void printSeatAlreadyBooked(const std::string& seatNumber) const{
-        std::cout << "Sorry, seat \"" << seatNumber << "\" is already booked.\n";
+        std::cout << colorText("Sorry, seat \"" + seatNumber + "\" is already booked.\n", TerminalColor::RED);
     }
 
     void printDuplicateSeat(const std::string& seatNumber) const{
-        std::cout << "Seat \"" << seatNumber << "\" is entered more than once. "
-                  << "Please avoid duplicates.\n";
+        std::cout << colorText("Seat \"" + seatNumber + "\" is entered more than once. "
+                  "Please avoid duplicates.\n", TerminalColor::YELLOW);
     }
 
     void printPaymentFailed() const{
-        std::cout << "Booking not confirmed because payment failed. "
-                  << "Seats have been released.\n";
+        std::cout << colorText("Booking not confirmed because payment failed. "
+                  "Seats have been released.\n", TerminalColor::RED);
     }
 
     void printBookingNotFound(int bookingId) const{
-        std::cout << "Booking with ID " << bookingId << " not found.\n";
+        std::cout << colorText("Booking with ID " + std::to_string(bookingId) + " not found.\n", TerminalColor::RED);
     }
 
     void printBookingAlreadyCancelled(int bookingId) const{
-        std::cout << "Booking " << bookingId << " is already cancelled.\n";
+        std::cout << colorText("Booking " + std::to_string(bookingId) + " is already cancelled.\n", TerminalColor::YELLOW);
     }
 
     void printCancellationSuccessful(int bookingId) const{
-        std::cout << "Booking " << bookingId
-                  << " has been cancelled successfully. "
-                  << "Seats are now available.\n";
+        std::cout << colorText("Booking " + std::to_string(bookingId) +
+                  " has been cancelled successfully. Seats are now available.\n", TerminalColor::GREEN);
     }
 
     void printNoSeatsSelected() const{
-        std::cout << "No seat numbers provided. Booking aborted.\n";
+        std::cout << colorText("No seat numbers provided. Booking aborted.\n", TerminalColor::RED);
     }
 
 public:
@@ -201,7 +202,7 @@ public:
             printNoMovies();
             return false;
         }
-        std::cout << "\n--- Now Playing ---\n";
+        std::cout << colorText("\n--- Now Playing ---\n", TerminalColor::BOLD_CYAN);
         int displayIndex = FIRST_DISPLAY_INDEX;
         for (const auto* movie : movies)
         {
@@ -215,11 +216,11 @@ public:
     bool listShowsForMovie(int movieChoice) const{
         const Movie* movie = findMovieByIndex(movieChoice);
         if (movie == nullptr){
-            std::cout << "Invalid movie choice.\n";
+            std::cout << colorText("Invalid movie choice.\n", TerminalColor::RED);
             return false;
         }
         bool foundAny = false;
-        std::cout << "\nShows for \"" << movie->getTitle() << "\":\n";
+        std::cout << colorText("\nShows for \"" + movie->getTitle() + "\":\n", TerminalColor::BOLD);
         for (const auto* show : shows){
             if (show->getMovie() == movie)
             {

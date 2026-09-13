@@ -5,6 +5,7 @@
 #include <iostream>
 #include <iomanip>
 #include <string>
+#include <sstream>
 
 class TicketPrinter{
 private:
@@ -14,11 +15,11 @@ private:
         "=========================================";
 
     void printHeader() const{
-        std::cout << "\n" << TICKET_HEADER << "\n";
+        std::cout << colorText("\n" + std::string(TICKET_HEADER) + "\n", TerminalColor::BOLD_GREEN);
     }
 
     void printFooter() const{ 
-        std::cout << TICKET_FOOTER << "\n\n";
+        std::cout << colorText(std::string(TICKET_FOOTER) + "\n\n", TerminalColor::BOLD_GREEN);
     }
 
     std::string buildSeatListText(const Booking& booking) const{
@@ -37,18 +38,20 @@ private:
     }
 
     void printAmount(double amount) const{
-        std::cout << "Total Amount   : " << CURRENCY_SYMBOL
-                  << std::fixed << std::setprecision(2) << amount << "\n";
+        std::ostringstream oss;
+        oss << std::fixed << std::setprecision(2) << amount;
+        std::cout << colorText("Total Amount   : ", TerminalColor::CYAN) 
+                  << CURRENCY_SYMBOL << colorText(oss.str(), TerminalColor::BOLD_GREEN) << "\n";
     }
 
     void printBody(const Booking& booking) const{
-        std::cout << "Booking ID     : " << booking.getBookingId() << "\n";
-        std::cout << "Movie          : " << booking.getShow()->getMovie()->getTitle() << "\n";
-        std::cout << "Screen         : " << booking.getShow()->getScreen()->getScreenNumber() << "\n";
-        std::cout << "Start Time     : " << booking.getShow()->getStartTime() << "\n";
-        std::cout << "Seats          : " << buildSeatListText(booking) << "\n";
+        std::cout << colorText("Booking ID     : ", TerminalColor::CYAN) << booking.getBookingId() << "\n";
+        std::cout << colorText("Movie          : ", TerminalColor::CYAN) << colorText(booking.getShow()->getMovie()->getTitle(), TerminalColor::BOLD) << "\n";
+        std::cout << colorText("Screen         : ", TerminalColor::CYAN) << booking.getShow()->getScreen()->getScreenNumber() << "\n";
+        std::cout << colorText("Start Time     : ", TerminalColor::CYAN) << booking.getShow()->getStartTime() << "\n";
+        std::cout << colorText("Seats          : ", TerminalColor::CYAN) << colorText(buildSeatListText(booking), TerminalColor::YELLOW) << "\n";
         printAmount(booking.getTotalAmount());
-        std::cout << "Payment Method : " << booking.getPaymentMethodName() << "\n";
+        std::cout << colorText("Payment Method : ", TerminalColor::CYAN) << booking.getPaymentMethodName() << "\n";
     }
 
 public:

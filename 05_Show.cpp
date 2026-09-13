@@ -1,7 +1,10 @@
 //05_Show.cpp represents a screening of a movie on a screen at a given time.
 //Composition: Show owns ShowSeat objects via unique_ptr
 //Aggregation: Uses Movie and Screen via raw pointers but also doesn't own them.
-#include <bits/stdc++.h>
+#include <iostream>
+#include <vector>
+#include <string>
+#include <memory>
 
 class Show{
 public:
@@ -30,24 +33,28 @@ private:
         }
     }
     void printShowHeader() const{
-        std::cout << "\n--- Seat Layout for Show " << showId
-                  << " | " << movie->getTitle()
-                  << " | Screen " << screen->getScreenNumber()
-                  << " | " << startTime << " ---\n";
-        std::cout << std::left
-                  << std::setw(10) << "Seat"
-                  << std::setw(12) << "Type"
-                  << std::setw(12) << "Status"
+        std::cout << colorText("\n--- Seat Layout for Show " + std::to_string(showId) +
+                  " | " + movie->getTitle() +
+                  " | Screen " + std::to_string(screen->getScreenNumber()) +
+                  " | " + startTime + " ---\n", TerminalColor::BOLD_CYAN);
+        
+        // Using colorPadded instead of std::setw to prevent ANSI code alignment bugs
+        std::cout << colorPadded("Seat", 10, TerminalColor::BOLD)
+                  << colorPadded("Type", 12, TerminalColor::BOLD)
+                  << colorPadded("Status", 12, TerminalColor::BOLD)
                   << "\n";
         std::cout << std::string(34, '-') << "\n";
     }
     void printSeatLine(const ShowSeat& showSeat) const{
-        std::cout << std::left
-                  << std::setw(10) << showSeat.getSeatNumber()
-                  << std::setw(12) << toString(showSeat.getSeatType())
-                  << std::setw(12) << (showSeat.isAvailable()
-                       ? toString(SeatStatus::AVAILABLE)
-                       : toString(SeatStatus::BOOKED))
+        std::string seatNum = showSeat.getSeatNumber();
+        std::string seatType = toString(showSeat.getSeatType());
+        std::string status = showSeat.isAvailable() ? toString(SeatStatus::AVAILABLE) : toString(SeatStatus::BOOKED);
+        
+        std::string statusColor = showSeat.isAvailable() ? TerminalColor::GREEN : TerminalColor::RED;
+        
+        std::cout << colorPadded(seatNum, 10, TerminalColor::CYAN)
+                  << colorPadded(seatType, 12, TerminalColor::YELLOW)
+                  << colorPadded(status, 12, statusColor)
                   << "\n";
     }
 public:

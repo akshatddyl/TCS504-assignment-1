@@ -21,7 +21,13 @@
 - [Part G — Modular Code](#part-g--modular-code)
 # Demo of whole workflow & edge case handling
 
-<img width="800" height="430" alt="screenrecording-2026-09-13-23-03-47_z3XF1hjn-ezgif com-video-to-gif-converter" src="https://github.com/user-attachments/assets/5d37bb9c-641f-4087-a777-6a10c40fa8f8" />
+
+
+https://github.com/user-attachments/assets/9f075494-6b91-417b-b871-62fd8114c772
+
+
+
+
 
 ---
 
